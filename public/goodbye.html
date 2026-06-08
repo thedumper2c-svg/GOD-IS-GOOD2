@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Areoy Proxy — Farewell</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #080810;
+      --surface:  #0e0e1a;
+      --border:   rgba(180,160,255,0.12);
+      --glow:     rgba(160,120,255,0.18);
+      --text:     #cdc8e8;
+      --muted:    rgba(200,190,230,0.45);
+      --accent:   #a07cff;
+      --gold:     #c9a84c;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'EB Garamond', Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    /* star field */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 12% 8%,  rgba(255,255,255,.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 34% 22%, rgba(255,255,255,.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 56% 5%,  rgba(255,255,255,.6)  0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 17%, rgba(255,255,255,.4)  0%, transparent 100%),
+        radial-gradient(1px 1px at 91% 38%, rgba(255,255,255,.3)  0%, transparent 100%),
+        radial-gradient(1px 1px at 23% 55%, rgba(255,255,255,.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 67% 48%, rgba(255,255,255,.5)  0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 72%, rgba(255,255,255,.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 82% 63%, rgba(255,255,255,.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 7%  88%, rgba(255,255,255,.4)  0%, transparent 100%),
+        radial-gradient(1px 1px at 29% 91%, rgba(255,255,255,.3)  0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,.5)  0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 79%, rgba(255,255,255,.45) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ambient glow orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 480px; height: 480px; background: rgba(100,60,200,0.14); top: -120px; left: -100px; }
+    .orb-2 { width: 360px; height: 360px; background: rgba(80,40,160,0.10); bottom: -80px; right: -60px; animation-delay: -6s; }
+    @keyframes drift { from { transform: translate(0,0); } to { transform: translate(30px, 20px); } }
+
+    /* main layout */
+    .stage {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    /* divider line */
+    .rule {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 0 auto;
+      opacity: 0.5;
+    }
+
+    /* logo / title */
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: #fff;
+      text-shadow:
+        0 0 40px var(--accent),
+        0 0 80px rgba(130,80,255,0.3);
+      animation: fadeDown .9s ease both;
+    }
+
+    .logo-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(.7rem, 2vw, 1rem);
+      letter-spacing: .35em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 6px;
+      animation: fadeDown .9s .15s ease both;
+    }
+
+    /* dates badge */
+    .dates {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: .78rem;
+      letter-spacing: .18em;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 3px;
+      padding: 6px 18px;
+      margin: 28px 0;
+      animation: fadeUp .9s .3s ease both;
+    }
+
+    /* main card */
+    .card {
+      max-width: 680px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 50px 52px;
+      box-shadow: 0 0 60px var(--glow), 0 2px 40px rgba(0,0,0,0.5);
+      animation: fadeUp .9s .45s ease both;
+    }
+
+    .card p {
+      font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 1.3em;
+    }
+    .card p:last-child { margin-bottom: 0; }
+
+    .card em {
+      color: #fff;
+      font-style: italic;
+    }
+
+    /* signature */
+    .sig {
+      margin-top: 40px;
+      font-family: 'Cinzel', serif;
+      font-size: .9rem;
+      letter-spacing: .15em;
+      color: var(--muted);
+      animation: fadeUp .9s .65s ease both;
+    }
+    .sig strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1rem;
+      margin-top: 4px;
+      letter-spacing: .2em;
+    }
+
+    /* candle flicker icon */
+    .candle {
+      font-size: 2.2rem;
+      display: block;
+      margin: 0 auto 22px;
+      animation: flicker 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px rgba(255,180,60,0.6));
+    }
+    @keyframes flicker {
+      0%,100% { opacity: 1; transform: scale(1); }
+      45%      { opacity: .85; transform: scale(.97) rotate(-1deg); }
+      70%      { opacity: .95; transform: scale(1.02) rotate(.5deg); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 36px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="stage">
+
+    <div class="rule" style="margin-bottom:36px"></div>
+
+    <h1 class="logo">Areoy Proxy</h1>
+    <p class="logo-sub">A proxy service</p>
+
+    <span class="dates">Est. — Now Retired</span>
+
+    <div class="card">
+      <span class="candle">🕯</span>
+
+      <p>
+        It's been a <em>good, solid run.</em> Areoy has served its purpose faithfully —
+        routing requests, keeping things moving, and doing what it was built to do
+        without complaint.
+      </p>
+
+      <p>
+        But every chapter has its last page. Today, Areoy Proxy comes to an end.
+        Not with a crash, not with regret — just a quiet, clean goodbye to something
+        that mattered while it lasted.
+      </p>
+
+      <p>
+        To everyone who used it, bookmarked it, relied on it, or just stumbled
+        across it — <em>thank you.</em> It was worth every line of code.
+      </p>
+
+      <p style="font-style:italic; color:rgba(200,190,230,0.5); font-size:1rem;">
+        The service is now offline. No further updates will be made.
+      </p>
+    </div>
+
+    <p class="sig">
+      Made with care by
+      <strong>Kamsi Obierika</strong>
+    </p>
+
+    <div class="rule" style="margin-top:40px"></div>
+
+  </div>
+
+</body>
+</html>
